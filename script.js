@@ -2,7 +2,14 @@ let container = document.querySelector('.container');
 let resetButton = document.querySelector('.reset');
 
 function mouseover(e) {
-    e.target.style.backgroundColor = 'black';
+    let mouseOverCount = e.target.getAttribute('mouse-over-count');
+    mouseOverCount++;
+    e.target.setAttribute('mouse-over-count', mouseOverCount);
+    let hue = Math.floor(Math.random()*360);
+    let saturation = Math.floor(Math.random()*100);
+    let lightness = Math.max(100-10*mouseOverCount, 0);
+    e.target.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    console.log(e.target.style.backgroundColor);
 }
 
 function fillGrid(n) {
@@ -16,6 +23,7 @@ function fillGrid(n) {
         element.style.height = `${height}px`;
         element.style.margin = "0px";
         element.addEventListener('mouseover', mouseover);
+        element.setAttribute('mouse-over-count', '0');
         container.appendChild(element);
     }
     //resetButton.style.marginTop = `${n/2}px`;
